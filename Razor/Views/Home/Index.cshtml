@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Html;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@{
+    string name = "Marika";
+    string surname = "Keller";
+    int n = 5;
+    string p = "nel mezzo del cammin di nostra vita";
+    char c = Convert.ToChar("a");
+}
+
+@*@Html.Raw(PrintUserName(name, surname))  //Davide devo chiederti una cosa*@
+
+
+<p> bla bla bla @Html.Raw(PrintNumbers(n))  bla bla bla bla bla</p>
+<p>la lettera "@c" viene ripetuta nella frase <i>"@p"</i>, <b>@CountChars(p, c)</b> Volte</p>
+
+    <ul>
+        @foreach (int num in CreateIntList(20, 1, 91))
+        {
+        @if (PrintFiltredIntList(num, 20, 70) == true)
+        {
+            <li>@num</li>
+        }
+    }
+    </ul>
+
+@*//5. Stampare in pagina la data e l'ora attuale (usando la classe DateTime) con il formato anno-mese-giorno ore:minuti:secondi*@
+<h3>data odierna: @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</h3>
+
+@*
+    //6. Partendo dalla data di oggi (usando la classe DateTime) stampare in pagina
+   //b. che giorno della settimana è oggi (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)*@
+<h3>oggi è: @DateTime.Now.DayOfWeek.ToString()</h3>
+
+@*  //a. la data di 7 giorni fa*@
+<h3> 7 giorni fa era: @DateTime.Now.AddDays(-7).DayOfWeek.ToString()</h3>
+
+
+@*   //c. che giorno della settimana sarà nello stesso giorno e mese di oggi ma tra un anno (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)*@
+<h3> oggi fra un anno sarà: @DateTime.Now.AddYears(1).DayOfWeek.ToString()</h3>
+
+@functions{
+    //1. Stampare il nostro nome e cognome all'interno di un tag h2
+    public string PrintUserName(string n, string s) => @$"<h2> io sono {n} {s} <h2>";
+    //2. Creare una funzione che stampa la somma dei numeri che vanno da 1 a n (con n passato come parametro - n incluso)    Stampare dentro uno span il risultato.
+    public string PrintNumbers(int maxNum)
+    {
+        int sum = 0;
+        for (int i = 1; i <= maxNum; i++)
+        {
+            sum += i;
+        }
+        return @$"<span> la somma dei numeri da 1 a {maxNum} è:  {sum} </span>"; 
+    }
+    //3. Contare quante volte la lettera a è presente nalla frase "nel mezzo del cammin di nostra vita" e stampare questo valore in pagina
+    public int CountChars(string source, char toFind)=> source.Count(t => t == toFind);
+
+    //4. Creare una List<int> di 20 numeri interi(generati random da 1 a 90, 1 e 90 inclusi) e mostrare in pagina solo i numeri compresi tra 20 e 70
+    public List <int> CreateIntList( int lenght, int min, int max)
+    {
+        Random rand = new();
+        List<int> int_list = new();
+
+        for(int i = 0; i< lenght; i++)
+        {
+            int_list.Add(rand.Next(min, max));
+        }
+        return int_list;
+    }
+
+    public bool PrintFiltredIntList(int n, int min, int max)=> (n >= min && n <= max)? true : false;
+}
+
+
+
+
+
+
+
+
+
