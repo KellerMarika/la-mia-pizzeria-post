@@ -15,7 +15,7 @@ namespace la_mia_pizzeria_static.Models
                 //SQL salva riga
             }
         }
-        internal class Timestamps : IHasUpdate
+        public class Timestamps : IHasUpdate
         {
             [Column("created_at")]
             public DateTime CreationDate { get; set; } = DateTime.UtcNow;

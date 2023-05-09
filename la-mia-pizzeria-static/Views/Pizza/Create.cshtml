@@ -1,0 +1,64 @@
+﻿
+@{
+    using PizzeriaDbContext Pizzeria = new();
+    List<Ingredient> ingredientsList = Pizzeria.Ingredients.ToList();
+}
+
+@model Pizza
+
+<div class="container">
+    <h1>CREATE a new PIZZA</h1>
+    <form asp-controller="Pizza" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        @*name*@
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input asp-for="Name" id="name" class="form-control" placeholder="Enter pizza's name"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        @*desc*@
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="description">Descrition</label>
+                <textarea asp-for="Description" id="description" class="form-control" placeholder="Enter pizza's description"> </textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        @*img*@
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="img">Image</label>
+                <input asp-for="Img" type="file" id="img" class="form-control" placeholder="Enter pizza's Image" />
+                <span asp-validation-for="Img" class="text-danger"></span>
+            </div>
+        </div>
+        @*price*@
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="price">Price</label>
+                <input type="number" asp-for="Price" id="price" step="0.01" class="form-control" placeholder="enter pizza price" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        @*ingredienti*@
+     <div class="form-group">
+        <label>Ingredients</label>
+
+            <div class="mb-3 d-flex">
+                @foreach (var ing in ingredientsList)
+                {
+                    <div class="form-check px-4">
+                        <input type="checkbox" name="Ingredients" value="@ing.Id" class="form-check-input" />
+                        <label for="@ing.Id" class="form-check-label">@ing.Name</label>
+                    </div>
+                }
+                <span asp-validation-for="Ingredients" class="text-danger"></span>
+            </div>
+     </div>
+
+        <input type="submit" class="btn btn-danger " value="Aggiungi pizza al Menù!">
+    </form>
+</div>

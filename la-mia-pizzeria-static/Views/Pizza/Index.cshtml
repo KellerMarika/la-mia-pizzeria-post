@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Le Nostre Pizze Tonde";
 
-     var  ingredientsList= Enum.GetValues(typeof(IngredientsOptions));
+   
 }
 @model List<Pizza>;
 
@@ -44,18 +44,13 @@
                             <th>
                                 <a  class="btn btn-danger"
                                    href="@Url.Action("ShowDetails", "Pizza", new {Id=@Pizza.Id})">
-                                    Visuaizza Dettagli
+                                    Show Details
                                     <i class="fa-solid fa-pizza-slice"></i>
-                                
                                 </a>
-                                <img class="img-fluid" style="width:100px" src="@Pizza.Img" alt="@Pizza.Name">                                 
+                                <img class="img-fluid" style="width:100px" src="~/img/@Pizza.Img" alt="@Pizza.Name">
                             </th>
                             <th >
                                 <h5>@Pizza.Name</h5>
-                                <small>
-                               @*    @string.Join( ",", Pizza.Ingredients.ToArray() );*@
-                                </small>
-
                             </th>
                          
                             <th>@Pizza.Price</th>
@@ -72,64 +67,11 @@
             }
 
 
-
+        <a class="btn btn-danger"
+           href="@Url.Action("Create", "Pizza")">
+            AGGIUNGI UNA PIZZA
+        </a>
 		
-        <!--Table-->
-     @*   <table class="table table-striped pt-5 border">
-            <!--Table head-->
-            <thead>
-
-                <tr>
-                    <th>nome</th>
-                    <th>descrizione</th>
-                    <th>foto</th>
-                    <th>prezzo</th>
-                </tr>
-            </thead>
-            <!--Table body-->
-            <tbody>
-                <tr>
-                    <td>margherita</td>
-                    <td>mozzarella, pomodoro</td>
-                    <td>     <img class="img-fluid" style="width:100px" src="~/img/margherita.jpg" alt="margherita"> </td>
-                    <td>6€</td>    
-                </tr>
-                <tr>
-                    <td>pata-salsiccia</td>
-                    <td>mozzarella, pomodoro, salsiccia, patate</td>
-                    <td>     <img class="img-fluid" style="width:100px" src="~/img/patasal.webp" alt="margherita"> </td>
-                    <td>8€</td>
-                </tr>
-                <tr>
-                    <td>modenese</td>
-                    <td>mozzarella, pancetta, aceto balsamico</td>
-                    <td>     <img class="img-fluid" style="width:100px"  src="~/img/mia.jpeg" alt="margherita"> </td>
-                    <td>7€</td> 
-                </tr>
-                <tr>
-                    <td>verdurara</td>
-                    <td>pomodoro, verdure grigliate </td>
-                    <td>     <img class="img-fluid" style="width:100px" src="~/img/veg.jpg" alt="margherita"> </td>
-                    <td>8€</td>
-                </tr>
-                <tr>
-                    <td>abuela</td>
-                    <td>pomodoro, mozzarella, prosciutto cotto, funghi</td>
-                    <td>     <img class="img-fluid" style="width:100px"  src="~/img/funghi.jpg" alt="margherita"> </td>
-                    <td>7€</td>
-                </tr>
-
-                <tr>
-                    <td>baby</td>
-                    <td>pomodoro, mozzarella, wurster e olive </td>
-                    <td>     <img class="img-fluid" style="width:100px" src="~/img/baby.jpg" alt="margherita"> </td>
-                    <td>5€</td>
-                </tr>
-              
-            </tbody>
-            <!--Table body-->
-        </table>*@
-        <!--Table-->
     </div>
 </body>
 

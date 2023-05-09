@@ -1,10 +1,5 @@
 ﻿@model Pizza
 
-
-
-
-    
-
 <section class="main-content">
     <div class="container">
         <h1 class="text-center text-uppercase">Food Order Card</h1>
@@ -15,7 +10,7 @@
             <div class="col-sm-6 col-md-6 col-lg-6">
                 <div class="food-card food-card--vertical">
                     <div class="food-card_img">
-                        <img src="@Model.Img" alt="@Model.Name">
+                        <img src="~/img/@Model.Img" alt="@Model.Name">
                         <a href="#!"><i class="fa fa-heart"></i></a>
                     </div>
                     <div class="food-card_content">
@@ -26,7 +21,13 @@
                         <div class="food-card_bottom-section">
                             <div class="space-between">
                                 <div>
-                                    <span class="fa fa-fire"></span> @@Model.Kcal
+                                    <span class="fa fa-fire">
+                                  @*      @foreach (var ing in Model.Ingredients)
+                                        {
+                                            @ing.Name
+                                        }*@
+                                    </span> 
+
                                 </div>
                                 <div class="pull-right">
                                     <span class="badge badge-success">Veg</span>

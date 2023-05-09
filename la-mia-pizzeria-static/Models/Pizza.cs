@@ -8,83 +8,57 @@ using static Azure.Core.HttpHeader;
 
 namespace la_mia_pizzeria_static.Models
 {
-    enum IngredientsOptions {Pomodoro, Mozzarella, Funghi, Salsiccia, Wurstel, Olive, Pancetta, Zucchine, Melanzane, ProsciuttoCotto, AcetoBalsamico }
 
     [Table("pizzas")]
-    internal class Pizza : Timestamps
+    public class Pizza : Timestamps
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
+
+        private string name="Pizza";
         [Column("name")]
-        public string Name { get; set; }
+        [Required]
+        [MaximumLength(225)]
+        [MinimumLength(3)]
+        public string Name 
+        { get=> name;
+          set => name +=  (char.ToUpper(value[0]) + value.Substring(1));
+        }
+
         [Column("description")]
+        [Required]
+        [MaximumLength(225)]
+        [MinimumLength(5)]
+        // concatenazione dove si alternano 5 w (word) e 4 s(space)
+        [RegularExpression(@"\w+\s+\w+\s+\w+\s+\w+\s+\w+", ErrorMessage = "min 5 words required")]
         public string Description { get; set; }
+
         [Column("img")]
+        [Required]
+        [MaximumLength(225)]
+        [MinimumLength(1)]
         public string Img { get; set; }
+
         [Column("price")]
+        [Required]
         public double Price { get; set; }
 
+
         //relations
-        [Column("ingredients")]
-        private string ingredients;
+        public List<Ingredient> Ingredients { get; set; }
 
-        public string /*List<IngredientsOptions>*/ GetIngredients()
-        {
-            return "gli ingredienti sono: "+ingredients;
-           // return ingredients.Split(',').Select(s => (IngredientsOptions)Enum.Parse(typeof(IngredientsOptions), s)).ToList();
-        }
-        //internal void SetIngredients(params IngredientsOptions[] _ingredients)
-        //{
-        //    var validIngredients = Enum.GetValues(typeof(IngredientsOptions)).Cast<IngredientsOptions>();
-        //    //se tutti i valori dell'array Value passato al setter sono contenuti nell'elenco validato sopra di ingredientsOptions allora aggiorno a database la stringa degli enum
-        //    if (_ingredients.All(i => validIngredients.Contains(i)))
-        //    {
-        //        ingredients = string.Join(",", _ingredients);
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentException("gli ingredienti inseriti non sono validi!");
-        //    }
-        //}
-    [NotMapped]
-    public List<IngredientsOptions> Ingredients
-    {
-        get
-        {
-                //sta roba mi da errore Sytem.NullReferenceExeption
-            //splitto i valori e con Select li converto in una Lista di IngredientsOptions
-            return ingredients.Split(',').Select(s => (IngredientsOptions)Enum.Parse(typeof(IngredientsOptions), s)).ToList();
-        }
-        set
-        {   //prende la list di tutti i valori degli ingredientsOptions validi e li casta ( IEnumerable<IngredientsOptions> )
-            var validIngredients = Enum.GetValues(typeof(IngredientsOptions)).Cast<IngredientsOptions>();
-            //se tutti i valori dell'array Value passato al setter sono contenuti nell'elenco validato sopra di ingredientsOptions allora aggiorno a database la stringa degli enum
-            if (value.All(i => validIngredients.Contains(i)))
-            {
-                ingredients = string.Join(",", value);
-            }
-            else
-            {
-                throw new ArgumentException("gli ingredienti inseriti non sono validi!");
-            }
-        }
-    }
 
-    //+timestamps
+        //+timestamps
 
-    //LO VUOLE VUOTO IL DATABASE!!! AAAAAAAAARG
-    public Pizza() { }
-        public Pizza(string? name, string _description, string _img, double _price, params IngredientsOptions[] _ingredients)
+        public Pizza() { }
+        public Pizza(string _name, string _description, string _img, double _price, List <Ingredient> _ingredients)
         {
-            Name = name;
+            Name = _name;
             Description = _description;
-            Img = "~/wwwroot/img/" + _img;
+            Img = _img;
             Price = _price;
-            //SetIngredients(_ingredients);
-            Ingredients = _ingredients.ToList();//i controlli li faccio nel setter
+            Ingredients = _ingredients;
         }
-
-        //Pizza p1 = new Pizza("p1", "buona buona", "baby.jpg", 5.99, IngredientsOptions.Mozzarella, IngredientsOptions.Olive);
     }
 }
