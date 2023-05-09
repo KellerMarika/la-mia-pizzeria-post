@@ -42,6 +42,7 @@ namespace la_mia_pizzeria_static.Models
 
         [Column("price")]
         [Required]
+        [Range(0, Double.PositiveInfinity)]
         public double Price { get; set; }
 
 
